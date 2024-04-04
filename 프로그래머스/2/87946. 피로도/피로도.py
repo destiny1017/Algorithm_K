@@ -2,9 +2,6 @@ from itertools import permutations
 
 def solution(k, dungeons):
     answer = -1
-    # k_map = {}
-    # for key, value in dungeons:
-    #     k_map[key] = value
     
     for perm in permutations(dungeons, len(dungeons)):
         cnt = 0
