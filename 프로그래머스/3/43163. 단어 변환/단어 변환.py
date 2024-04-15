@@ -15,19 +15,18 @@ def bfs(begin, target, words):
 
     while queue:
         change_word, cnt = queue.popleft()
-        complete = True
+        
+        if change_word == target:
+            return cnt
+        
         for i in range(len(change_word)):
             if target[i] != change_word[i]:
-                complete = False
                 for word in reversed(words):
                     tmp_words = list(word)
                     tmp_words[i] = change_word[i]
                     if "".join(tmp_words) == change_word:
                         queue.append((word, cnt+1))
                         words.remove(word)
-        if complete:
-            # print("complete", change_word)
-            return cnt
     
     return 0
     
