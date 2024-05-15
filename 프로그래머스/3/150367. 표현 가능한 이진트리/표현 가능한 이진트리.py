@@ -1,17 +1,15 @@
 from bisect import bisect_left
 
+# 더이상 분할할 수 없을 때까지 좌우로 분할하며 부모값과 자신값 비교하여 결과 반환
 def recursive(arr, parent):
     mid = len(arr) // 2
+    disconnect = arr[mid] == '1' and parent == '0'
     
-    unperfect = arr[mid] == '1' and parent == '0'
+    if mid == 0:
+        return disconnect
     
-    if mid != 0:
-        child1 = recursive(arr[:mid], arr[mid])
-        child2 = recursive(arr[mid+1:], arr[mid])
-        # print(f"child1={child1}, child2={child2}")
-        return child1 or child2 or unperfect
+    return recursive(arr[:mid], arr[mid]) or recursive(arr[mid+1:], arr[mid]) or disconnect
     
-    return unperfect
 
 def solution(numbers):
     answer = []
@@ -26,17 +24,8 @@ def solution(numbers):
         if diff != 0:
             bin_num = ("0" * diff) + bin_num
         
-        # 루트노드가 0인데 자식노드가 1이면 불가능
-        # no_perfect = False
-        # j = 0
-        # for i in range(1, len(bin_num), 2):
-        #     if len(bin_num) // 2
-        #     if bin_num[i] == '0' and (bin_num[i-1] == '1' or bin_num[i+1] == '1'):
-        #         no_perfect = True
-        #         break
-        # print(f"bin_num={bin_num}, bin_num[len(bin_num) // 2]={bin_num[len(bin_num) // 2]}")
-        no_perfect = recursive(bin_num, bin_num[len(bin_num) // 2])
-        
-        answer.append(0 if no_perfect else 1)
+        # 트리 구성 가능 여부 재귀호출
+        disconnect = recursive(bin_num, bin_num[len(bin_num) // 2])
+        answer.append(0 if disconnect else 1)
         
     return answer
