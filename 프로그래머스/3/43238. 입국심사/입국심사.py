@@ -1,23 +1,21 @@
 def solution(n, times):
-    answer = binary_search(1, max(times)*n, n, times, max(times)*n)
+    answer = 0
+    
+    max_value = max(times)
+    start, end = 1, max_value * n
+    
+    while start <= end:
+        mid = (start + end) // 2 
+        total = 0
+        for time in times:
+            total += mid // time 
+            if total > n:
+                break 
+        
+        if total >= n:
+            end = mid - 1
+            answer = mid
+        else:
+            start = mid + 1
+        
     return answer
-
-def binary_search(left, right, n, times, min_val):
-
-    if left > right:
-        return min_val
-
-    mid = (left + right) // 2
-
-    total = 0
-    for time in times:
-        total += mid // time
-
-        if total > n:
-            break
-
-    if total >= n:
-        min_val = mid
-        return binary_search(left, mid - 1, n, times, min_val)
-    else:
-        return binary_search(mid + 1, right, n, times, min_val)
