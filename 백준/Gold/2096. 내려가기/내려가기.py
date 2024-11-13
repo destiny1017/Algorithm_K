@@ -2,28 +2,18 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-point_map = [(int(num), int(num)) for num in input().split()]
+dp = [(int(num), int(num)) for num in input().split()]
 
 for i in range(n-1):
     arr = [int(num) for num in input().split()]
-    new_map = []
-    for j in range(len(arr)):
-        if j == 0:
-            min_val = min(point_map[j][0], point_map[j + 1][0]) + arr[j]
-            max_val = max(point_map[j][1], point_map[j + 1][1]) + arr[j]
-            new_map.append((min_val, max_val))
-        elif j == 2:
-            min_val = min(point_map[j][0], point_map[j - 1][0]) + arr[j]
-            max_val = max(point_map[j][1], point_map[j - 1][1]) + arr[j]
-            new_map.append((min_val, max_val))
-        else:
-            min_val = min(point_map[j][0], point_map[j - 1][0], point_map[j + 1][0]) + arr[j]
-            max_val = max(point_map[j][1], point_map[j - 1][1], point_map[j + 1][1]) + arr[j]
-            new_map.append((min_val, max_val))
-    point_map = new_map
+    dp = [
+        (min(dp[0][0], dp[1][0]) + arr[0], max(dp[0][1], dp[1][1]) + arr[0]),
+        (min(dp[0][0], dp[1][0], dp[2][0]) + arr[1], max(dp[0][1], dp[1][1], dp[2][1]) + arr[1]),
+        (min(dp[1][0], dp[2][0]) + arr[2], max(dp[1][1], dp[2][1]) + arr[2]),
+    ]
 
 min_val, max_val = 1e9, 0
-for val in point_map:
+for val in dp:
     min_val = min(min_val, val[0])
     max_val = max(max_val, val[1])
 
