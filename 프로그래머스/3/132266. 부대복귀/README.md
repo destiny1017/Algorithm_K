@@ -1,10 +1,10 @@
 # [level 3] 부대복귀 - 132266 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/132266) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/132266?language=python3) 
 
 ### 성능 요약
 
-메모리: 152 MB, 시간: 1042.28 ms
+메모리: 109 MB, 시간: 791.73 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 01월 21일 22:34:21
+2025년 01월 21일 22:38:27
 
 ### 문제 설명
 
