@@ -1,31 +1,30 @@
-import heapq
-
-def min_dist(graph, start):
-    INF = 10**6
-    distance = [INF] * len(graph)
-    distance[start] = 0
-    queue = []
-    heapq.heappush(queue, (0, start))
-    while queue:
-        dist, node = heapq.heappop(queue)
-        if dist > distance[node]:
-            continue
-        
-        for dest in graph[node]:
-            cost = dist + 1
-            if cost < distance[dest]:
-                distance[dest] = cost
-                heapq.heappush(queue, (cost, dest))
-    return distance
+from collections import deque
 
 def solution(n, roads, sources, destination):
     answer = []
+    INF = 10**6
     graph = [[] for _ in range(n + 1)]
+    visit = [False] * (n+1)
+    result = [INF] * (n+1)
+    
     for st, ed in roads:
         graph[st].append(ed)
         graph[ed].append(st)
     
-    result = min_dist(graph, destination)
+    queue = deque()
+    queue.append((destination, 0))
+    result[destination] = 0
+    
+    while queue:
+        node, cnt = queue.popleft()
+        if visit[node]:
+            continue
+        cnt += 1
+        for v in graph[node]:
+            if result[v] > cnt:
+                result[v] = cnt
+            queue.append((v, cnt))
+        visit[node] = True
     
     for val in sources:
         answer.append(-1 if result[val] == 10**6 else result[val])
