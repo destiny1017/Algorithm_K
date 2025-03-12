@@ -1,18 +1,14 @@
-def solution(elements):
-    answer = 0
-    accum_arr = list(accumulate(elements))
-    total = set(elements)
-    total.add(sum(elements))
+from itertools import accumulate
 
-    for i in range(1, len(elements)):
-        st, ed = 0 - i, 0
-        prev = st-1
-        num = accum_arr[-1] - accum_arr[prev]
-        
+def solution(elements):
+    accum_arr = list(accumulate(elements))
+    total = set()
+
+    for i in range(len(elements)):
+        num = accum_arr[-1] - accum_arr[-1 - i]
         for j in range(len(elements)):
-            num -= elements[st]
-            num += elements[ed]
+            num -= elements[j-i]
+            num += elements[j]
             total.add(num)
-            st += 1
-            ed += 1
+
     return len(total)
